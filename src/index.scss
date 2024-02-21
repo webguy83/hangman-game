@@ -1,0 +1,50 @@
+@import '~normalize.css';
+@import './styles/fonts.css';
+
+:root {
+  --dark-navy: #261676;
+  --blue: #2463ff;
+  --white: #ffffff;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+/* Base styles to ensure the body takes up the full viewport height */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh; /* Ensure body at least fills the viewport height */
+  background-size: cover; /* Cover the entire area without distorting the image */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
+}
+
+/* Responsive Background Images */
+/* Mobile devices */
+body {
+  background-image: url('./assets/images/background-mobile.svg');
+}
+
+/* Tablet devices */
+@media (min-width: 768px) {
+  body {
+    background-image: url('./assets/images/background-tablet.svg');
+  }
+}
+
+/* Desktop devices */
+@media (min-width: 1024px) {
+  body {
+    background-image: url('./assets/images/background-desktop.svg');
+  }
+}

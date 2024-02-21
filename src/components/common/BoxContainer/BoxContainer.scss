@@ -1,0 +1,28 @@
+.box-container {
+    position: relative; // This allows absolute positioning of child elements relative to this container
+    background: linear-gradient(180deg, #344ABA 0%, rgba(0, 20, 121, 0.83) 100%);
+    box-shadow: inset 0px -8px 0px 4px #140E66, inset 0px 6px 0px 8px #2463FF;
+    border-radius: 48px;
+    padding: 2rem; /* Adjust the padding as necessary */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .box-title {
+    position: absolute;
+    top: -2rem; // Half the height of the header to pull it up over the container
+    left: 50%;
+    transform: translateX(-50%); // Center it horizontally
+    font-size: 2rem; /* Example size, adjust as needed */
+    color: #FFFFFF;
+    margin-bottom: 2rem;
+  }
+  
+  /* Add styles for children elements, like buttons */
+  .button {
+    margin-bottom: 1rem;
+    /* Add other button styles */
+  }
+  
