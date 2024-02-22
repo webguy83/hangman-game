@@ -9,15 +9,15 @@ interface DialogProps {
 
 const Dialog: React.FC<DialogProps> = ({ onContinueClick, onNewCategoryClick, onQuitClick }) => {
   return (
-    <BoxContainer title="Paused">
+    <BoxContainer title='Paused'>
       {/* Buttons specific to Dialog */}
-      <button type='button' className="button-common continue-button" onClick={onContinueClick}>
+      <button type='button' className='button-common continue-button' onClick={onContinueClick}>
         Continue
       </button>
-      <button type='button' className="button-common new-category-button" onClick={onNewCategoryClick}>
+      <button type='button' className='button-common new-category-button' onClick={onNewCategoryClick}>
         New Category
       </button>
-      <button type='button' className="button-common quit-button" onClick={onQuitClick}>
+      <button type='button' className='button-common quit-button' onClick={onQuitClick}>
         Quit Game
       </button>
     </BoxContainer>

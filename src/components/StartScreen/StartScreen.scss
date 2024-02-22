@@ -45,3 +45,25 @@
 //   }
 
 //   /* Add media queries and other responsive design adjustments as necessary */
+
+.containerStartScreen {
+  width: 100%;
+  max-width: 60rem;
+}
+
+.start-button {
+  background: linear-gradient(180deg, #fe71fe 16.42%, #7199ff 100%);
+  box-shadow: inset 0px -4px 0px 5px #243041, inset 0px -12px 0px 11px #9d2df5;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  margin: 13rem 8.2rem 0;
+  padding: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.common-buttons {
+  margin: 6rem 0;
+}

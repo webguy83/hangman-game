@@ -7,12 +7,18 @@
   --white: #ffffff;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 html {
   font-size: 62.5%;
+}
+
+button {
+  transition: all 0.3s ease;
 }
 
 /* Base styles to ensure the body takes up the full viewport height */
@@ -27,13 +33,10 @@ body {
   background-size: cover; /* Cover the entire area without distorting the image */
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Prevent background image from repeating */
+  background-image: url('./assets/images/background-mobile.svg');
 }
 
 /* Responsive Background Images */
-/* Mobile devices */
-body {
-  background-image: url('./assets/images/background-mobile.svg');
-}
 
 /* Tablet devices */
 @media (min-width: 768px) {

@@ -1,7 +1,9 @@
 import React from 'react';
 import BoxContainer from '../common/BoxContainer'; // Adjust the path as necessary
 import './StartScreen.scss'; // Import the SCSS stylesheet
-import logo from "../../assets/images/logo.svg";
+import logo from '../../assets/images/logo.svg';
+import playIcon from '../../assets/images/icon-play.svg';
+import Button from '../common/Button';
 
 interface StartScreenProps {
   onStartClick: () => void;
@@ -10,16 +12,19 @@ interface StartScreenProps {
 
 const StartScreen: React.FC<StartScreenProps> = ({ onStartClick, onHowToPlayClick }) => {
   return (
-    <BoxContainer>
-      {/* Logo and buttons specific to StartScreen */}
-      <img src={logo} alt="The Hangman Game" className="logo" />
-      <button type='button' className="button-common start-button" onClick={onStartClick}>
-        Play
-      </button>
-      <button type='button' className="button-common how-to-play-button" onClick={onHowToPlayClick}>
-        How to Play
-      </button>
-    </BoxContainer>
+    <div className='containerStartScreen'>
+      <BoxContainer title={<img src={logo} alt='The Hangman Game' />}>
+        {/* Logo and buttons specific to StartScreen */}
+        <button type='button' className='start-button' onClick={onStartClick}>
+          <img src={playIcon} alt='Play Icon' />
+        </button>
+        <div className='common-buttons'>
+          <Button theme='blue' onClick={onHowToPlayClick}>
+            How To Play
+          </Button>
+        </div>
+      </BoxContainer>
+    </div>
   );
 };
 

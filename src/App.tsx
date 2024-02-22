@@ -14,11 +14,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app">
-      <StartScreen
-        onStartClick={handleStartClick}
-        onHowToPlayClick={handleHowToPlayClick}
-      />
+    <div className='app'>
+      <StartScreen onStartClick={handleStartClick} onHowToPlayClick={handleHowToPlayClick} />
     </div>
   );
 };
