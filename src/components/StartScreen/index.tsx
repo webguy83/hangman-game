@@ -14,7 +14,6 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStartClick, onHowToPlayClic
   return (
     <div className='containerStartScreen'>
       <BoxContainer title={<img src={logo} alt='The Hangman Game' />}>
-        {/* Logo and buttons specific to StartScreen */}
         <button type='button' className='start-button' onClick={onStartClick}>
           <img src={playIcon} alt='Play Icon' />
         </button>

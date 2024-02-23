@@ -62,6 +62,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), linear-gradient(180deg, #fe71fe 16.42%, #7199ff 100%);
+  }
 }
 
 .common-buttons {

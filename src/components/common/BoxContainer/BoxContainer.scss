@@ -18,6 +18,10 @@
   font-size: 2rem; /* Example size, adjust as needed */
   color: #ffffff;
   margin-bottom: 2rem;
+  background: linear-gradient(180deg, #67b6ff 16.42%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 
   > img {
     width: 100%;
