@@ -1,7 +1,6 @@
 import React from 'react';
 import BoxContainer from '../common/BoxContainer'; // Adjust the path as necessary
 import './StartScreen.scss'; // Import the SCSS stylesheet
-import logo from '../../assets/images/logo.svg';
 import playIcon from '../../assets/images/icon-play.svg';
 import Button from '../common/Button';
 
@@ -13,7 +12,7 @@ interface StartScreenProps {
 const StartScreen: React.FC<StartScreenProps> = ({ onStartClick, onHowToPlayClick }) => {
   return (
     <div className='containerStartScreen'>
-      <BoxContainer title={<img src={logo} alt='The Hangman Game' />}>
+      <BoxContainer>
         <button type='button' className='start-button' onClick={onStartClick}>
           <img src={playIcon} alt='Play Icon' />
         </button>

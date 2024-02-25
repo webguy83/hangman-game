@@ -1,12 +1,7 @@
-.dialog-backdrop {
-  position: fixed; // Fix the position relative to the viewport
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+.buttons {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  padding: 12rem 2.5rem 7rem;
+  gap: 3rem;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.75);
-  z-index: 1000;
 }

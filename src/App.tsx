@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import StartScreen from './components/StartScreen/'; // Adjust the import path as necessary
 import './App.scss'; // Assuming you have global styles defined in App.scss
 import Dialog from './components/Dialog';
-import win from './assets/images/win.png';
 
 const App: React.FC = () => {
-  const [showDialog, setShowDialog] = useState(true);
+  const [showDialog, setShowDialog] = useState(false);
   const handleStartClick = () => {
-    // Logic to start the game or navigate to the game component
-    console.log('Start game clicked');
+    setShowDialog(true);
   };
 
   const handleHowToPlayClick = () => {
@@ -18,7 +16,7 @@ const App: React.FC = () => {
 
   return (
     <div className='app'>
-      {showDialog && <Dialog title={win} />}
+      {showDialog && <Dialog titleText='You Lose' isOpen={showDialog} onRequestClose={() => setShowDialog(false)} />}
       <StartScreen onStartClick={handleStartClick} onHowToPlayClick={handleHowToPlayClick} />
     </div>
   );

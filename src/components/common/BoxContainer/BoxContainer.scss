@@ -3,7 +3,6 @@
   background: linear-gradient(180deg, #344aba 0%, rgba(0, 20, 121, 0.83) 100%);
   box-shadow: inset 0px -8px 0px 4px #140e66, inset 0px 6px 0px 8px #2463ff;
   border-radius: 6.2rem;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,11 +16,6 @@
   width: 80%;
   font-size: 2rem; /* Example size, adjust as needed */
   color: #ffffff;
-  margin-bottom: 2rem;
-  background: linear-gradient(180deg, #67b6ff 16.42%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 
   > img {
     width: 100%;
