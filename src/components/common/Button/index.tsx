@@ -1,5 +1,5 @@
 import React from 'react';
-import './Button.scss'; // Import the SCSS stylesheet
+import './Button.scss';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ children, onClick, theme }) => {
-  const themeClass = `button-${theme}`; // Constructs a string like 'button-blue' or 'button-pink'
+  const themeClass = `button-${theme}`;
   return (
     <button type='button' className={`button ${themeClass}`} onClick={onClick}>
       {children}
