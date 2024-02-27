@@ -2,22 +2,37 @@ import React, { useState } from 'react';
 import StartScreen from './components/StartScreen/';
 import './App.scss';
 import HowToPlay from './components/HowToPlay';
+import PickCategory from './components/PickACategory';
+import { GameState } from './constants/GameState';
 
 const App: React.FC = () => {
-  const [showDialog, setShowDialog] = useState(false);
-  const [showHowToPlay, setShowHowToPlay] = useState(false);
-  const handleStartClick = () => {};
+  const [gameState, setGameState] = useState<GameState>(GameState.Start);
+
+  const handleStartClick = () => {
+    setGameState(GameState.PickCategory);
+  };
 
   const handleHowToPlayClick = () => {
-    setShowHowToPlay(true);
+    setGameState(GameState.HowToPlay);
   };
 
-  const handleCloseHowToPlay = () => {
-    // Close the HowToPlay component
-    setShowHowToPlay(false);
+  const goBackToStart = () => {
+    setGameState(GameState.Start);
   };
 
-  return <div className='app'>{showHowToPlay ? <HowToPlay onClose={handleCloseHowToPlay} /> : <StartScreen onStartClick={handleStartClick} onHowToPlayClick={handleHowToPlayClick} />}</div>;
+  const handleCategorySelected = () => {
+    // Replace with logic to determine which category is selected
+    setGameState(GameState.MainGame);
+  };
+
+  return (
+    <div className='app'>
+      {gameState === GameState.Start && <StartScreen onStartClick={handleStartClick} onHowToPlayClick={handleHowToPlayClick} />}
+      {gameState === GameState.HowToPlay && <HowToPlay goBack={goBackToStart} />}
+      {gameState === GameState.PickCategory && <PickCategory onCategorySelected={handleCategorySelected} goBack={goBackToStart} />}
+      {/* {gameState === GameState.MainGame && <MainGame />} */}
+    </div>
+  );
 };
 
 export default App;
