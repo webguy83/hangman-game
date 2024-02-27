@@ -18,3 +18,22 @@
     width: 1.7rem;
   }
 }
+
+@media (min-width: 550px) {
+  .header-button {
+    box-shadow: inset 0px -6px 0px 7px rgba(157, 45, 245, 0.25);
+    padding: 1.9rem;
+    > img {
+      width: 2.7rem;
+    }
+  }
+}
+
+@media (min-width: 980px) {
+  .header-button {
+    padding: 1.9rem;
+    > img {
+      width: 4rem;
+    }
+  }
+}

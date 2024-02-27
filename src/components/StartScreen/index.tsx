@@ -11,17 +11,19 @@ interface StartScreenProps {
 
 const StartScreen: React.FC<StartScreenProps> = ({ onStartClick, onHowToPlayClick }) => {
   return (
-    <div className='containerStartScreen'>
-      <BoxContainer>
-        <button type='button' className='start-button' onClick={onStartClick}>
-          <img src={playIcon} alt='Play Icon' />
-        </button>
-        <div className='common-buttons'>
-          <Button theme='blue' onClick={onHowToPlayClick}>
-            How To Play
-          </Button>
-        </div>
-      </BoxContainer>
+    <div className='start-screen-container'>
+      <div className='start-screen'>
+        <BoxContainer>
+          <button type='button' className='start-button' onClick={onStartClick}>
+            <img src={playIcon} alt='Play Icon' />
+          </button>
+          <div className='common-buttons'>
+            <Button theme='blue' onClick={onHowToPlayClick}>
+              How To Play
+            </Button>
+          </div>
+        </BoxContainer>
+      </div>
     </div>
   );
 };
