@@ -5,6 +5,7 @@
   --dark-navy: #261676;
   --blue: #2463ff;
   --white: #ffffff;
+  --current-background-image: url('./assets/images/background-mobile.svg');
 }
 
 *,
@@ -21,34 +22,39 @@ button {
   transition: all 0.3s ease;
 }
 
-/* Base styles to ensure the body takes up the full viewport height */
+/* Base styles */
 html,
 body {
   margin: 0;
   padding: 0;
+  font-family: 'MouseMemoirs-Regular', sans-serif;
+  min-height: 100vh;
 }
 
 body {
-  font-family: 'MouseMemoirs-Regular', sans-serif;
-  min-height: 100vh; /* Ensure body at least fills the viewport height */
-  background-size: cover; /* Cover the entire area without distorting the image */
-  background-position: center; /* Center the background image */
-  background-repeat: no-repeat; /* Prevent background image from repeating */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Initial background image for mobile devices */
   background-image: url('./assets/images/background-mobile.svg');
 }
 
-/* Responsive Background Images */
+/* Applying the gradient overlay */
+.body-gradient {
+  background-image: linear-gradient(180deg, rgba(26, 4, 58, 0.75) 0%, rgba(21, 18, 120, 0.75) 70.31%, rgba(43, 22, 119, 0.75) 100%), /* Retain the existing background image */ var(--current-background-image);
+}
 
-/* Tablet devices */
+/* Responsive Background Images */
 @media (min-width: 768px) {
   body {
-    background-image: url('./assets/images/background-tablet.svg');
+    --current-background-image: url('./assets/images/background-tablet.svg');
+    background-image: var(--current-background-image);
   }
 }
 
-/* Desktop devices */
 @media (min-width: 1024px) {
   body {
-    background-image: url('./assets/images/background-desktop.svg');
+    --current-background-image: url('./assets/images/background-desktop.svg');
+    background-image: var(--current-background-image);
   }
 }

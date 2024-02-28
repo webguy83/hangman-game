@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import StartScreen from './components/StartScreen/';
 import './App.scss';
 import HowToPlay from './components/HowToPlay';
@@ -7,6 +7,17 @@ import { GameState } from './constants/GameState';
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.Start);
+
+  useEffect(() => {
+    if (gameState === GameState.Start) {
+      document.body.classList.remove('body-gradient');
+    } else {
+      document.body.classList.add('body-gradient');
+    }
+    return () => {
+      document.body.classList.remove('body-gradient');
+    };
+  }, [gameState]);
 
   const handleStartClick = () => {
     setGameState(GameState.PickCategory);
