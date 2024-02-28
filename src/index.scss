@@ -35,7 +35,6 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* Initial background image for mobile devices */
   background-image: url('./assets/images/background-mobile.svg');
 }
 
@@ -45,14 +44,14 @@ body {
 }
 
 /* Responsive Background Images */
-@media (min-width: 768px) {
+@media (min-width: 550px) {
   body {
     --current-background-image: url('./assets/images/background-tablet.svg');
     background-image: var(--current-background-image);
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 980px) {
   body {
     --current-background-image: url('./assets/images/background-desktop.svg');
     background-image: var(--current-background-image);
