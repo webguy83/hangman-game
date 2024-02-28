@@ -1,7 +1,6 @@
 .letter-button {
   width: 2.8rem;
   height: 5.6rem;
-  margin: 0.5rem;
   border: none;
   background-color: var(--white);
   color: var(--dark-navy);
@@ -9,7 +8,29 @@
   cursor: pointer;
   border-radius: 0.8rem;
 
+  &:hover:not(:disabled) {
+    background-color: var(--blue);
+    color: var(--white);
+  }
+
   &:disabled {
     opacity: 0.25;
+    cursor: default;
+  }
+}
+
+@media (min-width: 550px) {
+  .letter-button {
+    width: 6.4rem;
+    height: 8.4rem;
+    font-size: 4.8rem;
+  }
+}
+
+@media (min-width: 980px) {
+  .letter-button {
+    width: 10.9rem;
+    height: 8.4rem;
+    font-size: 4.8rem;
   }
 }
