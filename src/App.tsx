@@ -4,9 +4,12 @@ import './App.scss';
 import HowToPlay from './components/HowToPlay';
 import PickCategory from './components/PickACategory';
 import { GameState } from './constants/GameState';
+import MainGame from './components/MainGame';
 
 const App: React.FC = () => {
-  const [gameState, setGameState] = useState<GameState>(GameState.Start);
+  const [gameState, setGameState] = useState<GameState>(GameState.MainGame);
+  const [categoryName, setCategoryName] = useState<string>('Testing');
+  const [selectedWord, setSelectedWord] = useState<string>('Hazzah');
 
   useEffect(() => {
     if (gameState === GameState.Start) {
@@ -31,8 +34,9 @@ const App: React.FC = () => {
     setGameState(GameState.Start);
   };
 
-  const handleCategorySelected = (categoryName: string, selectedWord: string) => {
-    // Replace with logic to determine which category is selected
+  const handleCategorySelected = (selectedCategory: string, word: string) => {
+    setCategoryName(selectedCategory);
+    setSelectedWord(word);
     setGameState(GameState.MainGame);
   };
 
@@ -41,7 +45,7 @@ const App: React.FC = () => {
       {gameState === GameState.Start && <StartScreen onStartClick={handleStartClick} onHowToPlayClick={handleHowToPlayClick} />}
       {gameState === GameState.HowToPlay && <HowToPlay goBack={goBackToStart} />}
       {gameState === GameState.PickCategory && <PickCategory onCategorySelected={handleCategorySelected} goBack={goBackToStart} />}
-      {/* {gameState === GameState.MainGame && <MainGame />} */}
+      {gameState === GameState.MainGame && <MainGame categoryName={categoryName} selectedWord={selectedWord} />}
     </div>
   );
 };

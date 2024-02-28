@@ -1,0 +1,15 @@
+.letter-button {
+  width: 2.8rem;
+  height: 5.6rem;
+  margin: 0.5rem;
+  border: none;
+  background-color: var(--white);
+  color: var(--dark-navy);
+  font-size: 2.4rem;
+  cursor: pointer;
+  border-radius: 0.8rem;
+
+  &:disabled {
+    opacity: 0.25;
+  }
+}
