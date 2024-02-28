@@ -32,20 +32,24 @@
 }
 
 .keyboard-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(auto, 2.8rem)); // Adjust `minmax` based on your smallest button width
   gap: 2.4rem 0.8rem;
+  justify-content: center;
+  align-content: start;
+  width: 100%;
 }
 
 @media (min-width: 550px) {
   .keyboard-container {
     gap: 2.4rem 1.6rem;
+    grid-template-columns: repeat(auto-fill, minmax(auto, 6.4rem)); // Adjust to your medium button width
   }
 }
 
 @media (min-width: 980px) {
   .keyboard-container {
     gap: 2.4rem;
+    grid-template-columns: repeat(auto-fill, minmax(auto, 10.9rem)); // Adjust to your large button width
   }
 }
