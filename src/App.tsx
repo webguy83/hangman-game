@@ -20,7 +20,7 @@ const App: React.FC = () => {
     setGameState(GameState.Start);
   };
 
-  const handleCategorySelected = () => {
+  const handleCategorySelected = (categoryName: string, selectedWord: string) => {
     // Replace with logic to determine which category is selected
     setGameState(GameState.MainGame);
   };
