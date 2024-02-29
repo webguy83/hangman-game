@@ -1,10 +1,10 @@
 .letter-box {
-  width: 4rem;
-  height: 6.6rem;
+  width: clamp(2rem, 10vw, 4rem); // min-width, preferred, max-width
+  height: clamp(3.3rem, 15vw, 6.6rem); // min-height, preferred, max-height
   background: #2463ff;
   box-shadow: inset 0px -2px 0px 3px #140e66, inset 0px 1px 0px 6px #3c74ff;
   color: var(--white);
-  font-size: 4rem;
+  font-size: clamp(1.6rem, 5vw, 4rem); // min-font-size, preferred, max-font-size
   border-radius: 1.2rem;
   display: flex;
   align-items: center;
@@ -12,25 +12,52 @@
   opacity: 0.25;
   transition: all 0.3s;
 
+  &.space {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+
   &.revealed {
     opacity: 1;
   }
 }
 
+/* Use media queries for specific breakpoint styles */
 @media (min-width: 550px) {
   .letter-box {
-    width: 8.8rem;
-    height: 11.2rem;
-    font-size: 6.4rem;
-    border-radius: 3.2rem;
+    width: clamp(5rem, 8vw, 8.8rem); // Adjust the clamp values for this breakpoint
+    height: clamp(8.25rem, 12vw, 11.2rem); // Adjust the clamp values for this breakpoint
+    font-size: clamp(3.2rem, 4vw, 6.4rem); // Adjust the clamp values for this breakpoint
+    border-radius: clamp(1.6rem, 2vw, 3.2rem); // Adjust the clamp values for this breakpoint
   }
 }
 
 @media (min-width: 980px) {
   .letter-box {
-    width: 11.2rem;
-    height: 12.8rem;
-    font-size: 8.8rem;
-    border-radius: 4rem;
+    width: clamp(8rem, 6vw, 11.2rem); // Adjust the clamp values for this breakpoint
+    height: clamp(10.6rem, 9vw, 12.8rem); // Adjust the clamp values for this breakpoint
+    font-size: clamp(4.4rem, 3vw, 8.8rem); // Adjust the clamp values for this breakpoint
+    border-radius: clamp(2rem, 1.5vw, 4rem); // Adjust the clamp values for this breakpoint
   }
 }
+
+// @media (min-width: 550px) {
+//   .letter-box {
+//     width: 8.8rem;
+//     height: 11.2rem;
+//     font-size: 6.4rem;
+//     border-radius: 3.2rem;
+//   }
+// }
+
+// @media (min-width: 980px) {
+//   .letter-box {
+//     width: 11.2rem;
+//     height: 12.8rem;
+//     font-size: 8.8rem;
+//     border-radius: 4rem;
+//   }
+// }

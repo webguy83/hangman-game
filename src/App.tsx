@@ -9,7 +9,7 @@ import MainGame from './components/MainGame';
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.MainGame);
   const [categoryName, setCategoryName] = useState<string>('Testing');
-  const [selectedWord, setSelectedWord] = useState<string>('Hazzah');
+  const [selectedWord, setSelectedWord] = useState<string>('San Jose Sharks');
 
   useEffect(() => {
     if (gameState === GameState.Start) {
