@@ -10,25 +10,12 @@
 
 .category-header {
   font-size: 2rem;
-  margin-bottom: 2rem;
 }
 
 .word-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
-
-  .letter-box {
-    width: 3rem;
-    height: 4rem;
-    margin: 0.5rem;
-    border-bottom: 2px solid #ffffff; // Adjust the color to match your design
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: #ffffff; // Adjust the color to match your design
-  }
+  gap: 0.8rem 1.2rem;
 }
 
 .keyboard-container {
@@ -45,11 +32,17 @@
     gap: 2.4rem 1.6rem;
     grid-template-columns: repeat(auto-fill, minmax(auto, 6.4rem)); // Adjust to your medium button width
   }
+  .word-container {
+    gap: 1.2rem 1.6rem;
+  }
 }
 
 @media (min-width: 980px) {
   .keyboard-container {
     gap: 2.4rem;
     grid-template-columns: repeat(auto-fill, minmax(auto, 10.9rem)); // Adjust to your large button width
+  }
+  .word-container {
+    gap: 1.6rem;
   }
 }

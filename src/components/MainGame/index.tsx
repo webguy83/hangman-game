@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './MainGame.scss';
 import LetterButton from '../common/LetterButton';
+import LetterBox from '../common/LetterBox';
 
 interface MainGameProps {
   categoryName: string;
@@ -12,14 +13,10 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord }) => {
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
 
   // Convert selectedWord into an array of characters and map to JSX
-  const wordLetters = selectedWord
+  const letterBoxes = selectedWord
     .toUpperCase()
     .split('')
-    .map((letter, index) => (
-      <div className='letter-box' key={index}>
-        {guessedLetters.includes(letter) ? letter : ''}
-      </div>
-    ));
+    .map((letter, index) => <LetterBox key={index} letter={letter} isRevealed={guessedLetters.includes(letter)} />);
 
   // Function to handle letter button click
   const handleLetterClick = (letter: string) => {
@@ -36,7 +33,7 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord }) => {
   return (
     <div className='main-game'>
       <header className='category-header'>{categoryName}</header>
-      <div className='word-container'>{wordLetters}</div>
+      <div className='word-container'>{letterBoxes}</div>
       <div className='keyboard-container'>{letterButtons}</div>
     </div>
   );

@@ -1,0 +1,36 @@
+.letter-box {
+  width: 4rem;
+  height: 6.6rem;
+  background: #2463ff;
+  box-shadow: inset 0px -2px 0px 3px #140e66, inset 0px 1px 0px 6px #3c74ff;
+  color: var(--white);
+  font-size: 4rem;
+  border-radius: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.25;
+  transition: all 0.3s;
+
+  &.revealed {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 550px) {
+  .letter-box {
+    width: 8.8rem;
+    height: 11.2rem;
+    font-size: 6.4rem;
+    border-radius: 3.2rem;
+  }
+}
+
+@media (min-width: 980px) {
+  .letter-box {
+    width: 11.2rem;
+    height: 12.8rem;
+    font-size: 8.8rem;
+    border-radius: 4rem;
+  }
+}
