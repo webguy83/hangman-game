@@ -1,0 +1,41 @@
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  gap: 1.6rem;
+}
+
+.category {
+  font-size: 4rem;
+  font-weight: 400;
+  color: var(--white);
+  margin: 0;
+}
+
+.health-icon {
+  width: 2.6rem;
+  height: 2.4rem;
+}
+
+@media (min-width: 550px) {
+  .game-header {
+    gap: 3.2rem;
+  }
+  .health-icon {
+    width: 5.3rem;
+    height: 4.8rem;
+  }
+  .category {
+    font-size: 4.8rem;
+  }
+}
+
+@media (min-width: 980px) {
+  .game-header {
+    gap: 5.7rem;
+  }
+  .category {
+    font-size: 8.8rem;
+  }
+}

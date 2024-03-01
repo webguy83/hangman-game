@@ -1,7 +1,6 @@
 .main-game {
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
   min-height: 100vh;
   flex-direction: column;
   padding: 0 2rem;
@@ -17,19 +16,12 @@
   justify-content: center;
   gap: 0.8rem 1.2rem;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .word {
   display: flex;
   gap: 1.2rem;
-
-  &:not(.last-in-row)::after {
-    content: '';
-    width: 1.2rem;
-    display: inline-block;
-    height: 0;
-    visibility: hidden;
-  }
 }
 
 .keyboard-container {
@@ -46,15 +38,9 @@
     gap: 2.4rem 1.6rem;
     grid-template-columns: repeat(auto-fill, minmax(auto, 6.4rem)); // Adjust to your medium button width
   }
-  .word-container {
-    gap: 1.2rem 1.6rem;
-  }
-  .word {
-    &:not(.last-in-row)::after {
-      content: '';
-      width: 1.6rem;
-    }
-  }
+  // .word-container {
+  //   gap: 1.2rem 1.6rem;
+  // }
 }
 
 @media (min-width: 980px) {
@@ -62,7 +48,7 @@
     gap: 2.4rem;
     grid-template-columns: repeat(auto-fill, minmax(auto, 10.9rem)); // Adjust to your large button width
   }
-  .word-container {
-    gap: 1.6rem;
-  }
+  // .word-container {
+  //   gap: 1.6rem;
+  // }
 }
