@@ -7,7 +7,7 @@ import './Dialog.scss';
 interface DialogProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  titleText?: 'You Win' | 'You Lose' | 'Paused';
+  titleText?: 'You Win' | 'You Lose' | 'Paused' | null;
 }
 
 Modal.setAppElement('#root');
@@ -48,7 +48,7 @@ const Dialog: React.FC<DialogProps> = ({ titleText, isOpen, onRequestClose }) =>
       <BoxContainer titleText={titleText}>
         <div className='buttons'>
           <Button theme='blue' onClick={onContinueClick}>
-            Continue
+            {titleText === "Paused" ? "Continue" : "Play Again!"}
           </Button>
           <Button theme='blue' onClick={onNewCategoryClick}>
             New Category

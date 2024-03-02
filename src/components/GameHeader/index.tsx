@@ -8,16 +8,15 @@ interface GameHeaderProps {
   category: string;
   health: number;
   maxHealth: number;
+  onMenuClick: () => void;
 }
 
-const GameHeader: React.FC<GameHeaderProps> = ({ category, health, maxHealth }) => {
+const GameHeader: React.FC<GameHeaderProps> = ({ category, health, maxHealth, onMenuClick }) => {
   return (
     <header className='game-header'>
       <HeaderButton
         icon='menu'
-        onClick={function (): void {
-          console.log('opens it');
-        }}
+        onClick={onMenuClick}
       />
       <h1 className='category'>{category}</h1>
       <HealthBar health={health} maxHealth={maxHealth} />

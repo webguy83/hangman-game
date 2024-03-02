@@ -3,6 +3,7 @@ import './MainGame.scss';
 import LetterButton from '../common/LetterButton';
 import LetterBox from '../common/LetterBox';
 import GameHeader from '../GameHeader';
+import Dialog from '../Dialog';
 
 interface MainGameProps {
   categoryName: string;
@@ -11,59 +12,76 @@ interface MainGameProps {
 
 const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord }) => {
   // State to keep track of guessed letters
+  const maxTries = 8;
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
+  const [incorrectTries, setIncorrectTries] = useState<number>(0);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [gameState, setGameState] = useState<'You Win' | 'You Lose' | 'Paused' | null>(null);
 
-  const wordContainerRef = useRef<HTMLDivElement>(null);
-  const [lastWordIndexPerRow, setLastWordIndexPerRow] = useState<number[]>([]);
+  // Call this function when the game is won or lost
+  const handleGameEnd = (didWin: boolean) => {
+    setGameState(didWin ? 'You Win' : 'You Lose');
+    setModalIsOpen(true);
+  };
 
-  useEffect(() => {
-    const updateLastWordIndices = () => {
-      const container = wordContainerRef.current;
-      if (container) {
-        // Check if container is not null
-        let lastTopOffset = 0;
-        let indices: number[] = []; // Define indices as number array
-        console.log(Array.from(container.children as HTMLCollectionOf<HTMLElement>));
-        Array.from(container.children as HTMLCollectionOf<HTMLElement>).forEach((wordElement, index) => {
-          if (wordElement.offsetTop !== lastTopOffset) {
-            // This is the first word of a new line
-            lastTopOffset = wordElement.offsetTop;
-            // Add the index of the last word of the previous line
-            if (index > 0) indices.push(index - 1);
-          }
-          // Add the last word of the last line
-          if (index === container.children.length - 1) indices.push(index);
-        });
+  // Call this function when the hamburger menu is clicked
+  const togglePause = () => {
+    setGameState('Paused');
+    setModalIsOpen(true);
+  };
 
-        setLastWordIndexPerRow(indices);
+  // Function to update game state on incorrect guess
+  const handleIncorrectGuess = () => {
+    setIncorrectTries((prevIncorrectTries) => {
+      const newTries = prevIncorrectTries + 1;
+      if (newTries >= maxTries) {
+        handleGameEnd(false); // Player loses
       }
-    };
+      return newTries;
+    });
+  };
 
-    // Call it on mount and whenever the words might have reflowed
-    updateLastWordIndices();
-    window.addEventListener('resize', updateLastWordIndices);
+  // Helper function to check for a win
+  const checkForWin = (guessed: string[]) => {
+    return selectedWord
+      .toUpperCase()
+      .split('')
+      .filter((letter) => letter !== ' ')
+      .every((letter) => guessed.includes(letter));
+  };
 
-    return () => {
-      window.removeEventListener('resize', updateLastWordIndices);
-    };
-  }, [selectedWord]);
+  // Function to update game state on correct guess
+  const handleCorrectGuess = (guessed: string[]) => {
+    if (checkForWin(guessed)) {
+      handleGameEnd(true); // Player wins
+    }
+  };
 
-  // Function to handle letter button click
+  // Handler for when a letter is clicked
   const handleLetterClick = (letter: string) => {
     if (!guessedLetters.includes(letter)) {
-      setGuessedLetters((prevGuessedLetters) => [...prevGuessedLetters, letter]);
+      const newGuessedLetters = [...guessedLetters, letter];
+      setGuessedLetters(newGuessedLetters);
+
+      if (selectedWord.toUpperCase().includes(letter)) {
+        // Correct guess
+        handleCorrectGuess(newGuessedLetters);
+      } else {
+        // Incorrect guess
+        handleIncorrectGuess();
+      }
     }
-    // Add additional logic for correct or incorrect guess here
   };
 
   // Generate on-screen keyboard
   const letters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
   const letterButtons = letters.map((letter) => <LetterButton key={letter} letter={letter} onLetterClick={handleLetterClick} disabled={guessedLetters.includes(letter)} />);
+  const health = ((maxTries - incorrectTries) / maxTries) * 100;
 
   return (
     <div className='main-game'>
-      <GameHeader category={categoryName} health={8} maxHealth={8} />
-      <div className='word-container' ref={wordContainerRef}>
+      <GameHeader category={categoryName} health={health} maxHealth={100} onMenuClick={togglePause} />
+      <div className='word-container'>
         {selectedWord
           .toUpperCase()
           .split(' ')
@@ -76,6 +94,7 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord }) => {
           ))}
       </div>
       <div className='keyboard-container'>{letterButtons}</div>
+      <Dialog isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} titleText={gameState} />
     </div>
   );
 };

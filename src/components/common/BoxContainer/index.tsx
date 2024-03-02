@@ -7,7 +7,7 @@ import paused from '../../../assets/images/paused.png';
 
 interface BoxContainerProps {
   children: React.ReactNode;
-  titleText?: 'You Win' | 'You Lose' | 'Paused';
+  titleText?: 'You Win' | 'You Lose' | 'Paused' | null;
 }
 
 const BoxContainer: React.FC<BoxContainerProps> = ({ children, titleText }) => {
