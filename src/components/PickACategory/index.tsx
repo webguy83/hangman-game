@@ -1,19 +1,19 @@
 import React from 'react';
 import './PickACategory.scss';
 import Header from '../common/Header';
-import data from '../../data/data.json'; // Adjust the path as necessary
 import CategoryButton from '../common/CategoryButton';
 import { useCategorySelection } from '../../hooks/useCategorySelection';
+import { CategoryName } from '../../types';
 
 interface PickACategoryProps {
   goBack: () => void;
-  onCategorySelected: (categoryName: string, selectedWord: string) => void;
+  onCategorySelected: (categoryName: CategoryName, selectedWord: string) => void;
 }
 
 const PickACategory: React.FC<PickACategoryProps> = ({ goBack, onCategorySelected }) => {
-  const { selectRandomWord } = useCategorySelection();
+  const { selectRandomWord, categories } = useCategorySelection();
 
-  const handleCategorySelected = (categoryName: string) => {
+  const handleCategorySelected = (categoryName: CategoryName) => {
     const [name, word] = selectRandomWord(categoryName);
     onCategorySelected(name, word);
   };
@@ -22,10 +22,10 @@ const PickACategory: React.FC<PickACategoryProps> = ({ goBack, onCategorySelecte
     <div className='pick-a-category'>
       <Header goBack={goBack} headerTxt='Pick a Category' />
       <div className='pick-a-category-container'>
-        {Object.keys(data.categories).map((category) => (
+        {Object.keys(categories).map((category) => (
           <CategoryButton
             key={category}
-            categoryName={category}
+            categoryName={category as CategoryName}
             onClick={handleCategorySelected} // Pass this function as a prop to CategoryButton
           />
         ))}

@@ -6,10 +6,11 @@ import PickCategory from './components/PickACategory';
 import { GameState } from './constants/GameState';
 import MainGame from './components/MainGame';
 import { useCategorySelection } from './hooks/useCategorySelection';
+import { CategoryName } from './types';
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.Start);
-  const [categoryName, setCategoryName] = useState<string>('Countries');
+  const [categoryName, setCategoryName] = useState<CategoryName>('Countries');
   const [selectedWord, setSelectedWord] = useState<string>('San Jose Sharks');
   const { selectRandomWord } = useCategorySelection();
 
@@ -41,7 +42,7 @@ const App: React.FC = () => {
     handleCategorySelected(name, word);
   };
 
-  const handleCategorySelected = (selectedCategory: string, word: string) => {
+  const handleCategorySelected = (selectedCategory: CategoryName, word: string) => {
     setCategoryName(selectedCategory);
     setSelectedWord(word);
     setGameState(GameState.MainGame);

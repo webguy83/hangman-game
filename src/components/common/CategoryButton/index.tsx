@@ -2,10 +2,11 @@
 
 import React from 'react';
 import './CategoryButton.scss';
+import { CategoryName } from '../../../types';
 
 interface CategoryButtonProps {
-  categoryName: string;
-  onClick: (categoryName: string) => void;
+  categoryName: CategoryName;
+  onClick: (categoryName: CategoryName) => void;
 }
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({ categoryName, onClick }) => {

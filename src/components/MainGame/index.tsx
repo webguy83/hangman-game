@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './MainGame.scss';
 import LetterButton from '../common/LetterButton';
 import LetterBox from '../common/LetterBox';
