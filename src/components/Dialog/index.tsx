@@ -3,11 +3,15 @@ import BoxContainer from '../common/BoxContainer'; // Adjust the path as necessa
 import Button from '../common/Button';
 import Modal from 'react-modal';
 import './Dialog.scss';
+import { DialogState } from '../../types';
 
 interface DialogProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  titleText?: 'You Win' | 'You Lose' | 'Paused' | null;
+  titleText?: DialogState | null;
+  onNewCategory: () => void;
+  onPlayAgainOrContinue: () => void;
+  onQuit: () => void;
 }
 
 Modal.setAppElement('#root');
@@ -20,9 +24,9 @@ const customStyles = {
     bottom: 'auto',
     padding: '2rem',
     transform: 'translate(-50%, -50%)',
-    border: 'none', // Remove default borders
-    background: 'transparent', // Use BoxContainer for background
-    overflow: 'visible', // Prevent BoxContainer from being clipped,
+    border: 'none',
+    background: 'transparent',
+    overflow: 'visible',
     width: '100%',
     maxWidth: '59rem',
   },
@@ -31,29 +35,18 @@ const customStyles = {
   },
 };
 
-const Dialog: React.FC<DialogProps> = ({ titleText, isOpen, onRequestClose }) => {
-  // Handler functions
-  const onContinueClick = () => {
-    /* ... */
-  };
-  const onNewCategoryClick = () => {
-    /* ... */
-  };
-  const onQuitClick = () => {
-    /* ... */
-  };
-
+const Dialog: React.FC<DialogProps> = ({ titleText, isOpen, onRequestClose, onQuit, onNewCategory, onPlayAgainOrContinue }) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles} shouldCloseOnOverlayClick={false} contentLabel='Example Modal'>
       <BoxContainer titleText={titleText}>
         <div className='buttons'>
-          <Button theme='blue' onClick={onContinueClick}>
-            {titleText === "Paused" ? "Continue" : "Play Again!"}
+          <Button theme='blue' onClick={onPlayAgainOrContinue}>
+            {titleText === 'Paused' ? 'Continue' : 'Play Again!'}
           </Button>
-          <Button theme='blue' onClick={onNewCategoryClick}>
+          <Button theme='blue' onClick={onNewCategory}>
             New Category
           </Button>
-          <Button theme='pink' onClick={onQuitClick}>
+          <Button theme='pink' onClick={onQuit}>
             Quit Game
           </Button>
         </div>

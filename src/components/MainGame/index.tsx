@@ -4,19 +4,22 @@ import LetterButton from '../common/LetterButton';
 import LetterBox from '../common/LetterBox';
 import GameHeader from '../GameHeader';
 import Dialog from '../Dialog';
+import { DialogState } from '../../types';
 
 interface MainGameProps {
   categoryName: string;
   selectedWord: string;
+  onQuitGame: () => void;
+  onPlayAgain: () => void;
+  onNewCategory: () => void;
 }
 
-const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord }) => {
-  // State to keep track of guessed letters
+const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitGame, onNewCategory, onPlayAgain }) => {
   const maxTries = 8;
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [incorrectTries, setIncorrectTries] = useState<number>(0);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [gameState, setGameState] = useState<'You Win' | 'You Lose' | 'Paused' | null>(null);
+  const [gameState, setGameState] = useState<DialogState | null>(null);
 
   // Call this function when the game is won or lost
   const handleGameEnd = (didWin: boolean) => {
@@ -94,7 +97,23 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord }) => {
           ))}
       </div>
       <div className='keyboard-container'>{letterButtons}</div>
-      <Dialog isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} titleText={gameState} />
+      <Dialog
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        titleText={gameState}
+        onQuit={onQuitGame}
+        onNewCategory={onNewCategory}
+        onPlayAgainOrContinue={
+          gameState === 'Paused'
+            ? () => setModalIsOpen(false)
+            : () => {
+                onPlayAgain();
+                setModalIsOpen(false);
+                setGuessedLetters([]);
+                setIncorrectTries(0);
+              }
+        }
+      />
     </div>
   );
 };

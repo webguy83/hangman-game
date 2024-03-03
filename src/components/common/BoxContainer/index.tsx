@@ -4,10 +4,11 @@ import logo from '../../../assets/images/logo.svg';
 import win from '../../../assets/images/win.png';
 import lose from '../../../assets/images/lose.png';
 import paused from '../../../assets/images/paused.png';
+import { DialogState } from '../../../types';
 
 interface BoxContainerProps {
   children: React.ReactNode;
-  titleText?: 'You Win' | 'You Lose' | 'Paused' | null;
+  titleText?: DialogState | null;
 }
 
 const BoxContainer: React.FC<BoxContainerProps> = ({ children, titleText }) => {
