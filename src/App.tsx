@@ -9,9 +9,9 @@ import { useCategorySelection } from './hooks/useCategorySelection';
 import { CategoryName } from './types';
 
 const App: React.FC = () => {
-  const [gameState, setGameState] = useState<GameState>(GameState.Start);
+  const [gameState, setGameState] = useState<GameState>(GameState.MainGame);
   const [categoryName, setCategoryName] = useState<CategoryName>('Countries');
-  const [selectedWord, setSelectedWord] = useState<string>('San Jose Sharks');
+  const [selectedWord, setSelectedWord] = useState<string>('San Josedw Sharks');
   const { selectRandomWord } = useCategorySelection();
 
   useEffect(() => {
