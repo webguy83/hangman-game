@@ -21,6 +21,7 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitG
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [incorrectTries, setIncorrectTries] = useState<number>(0);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [modalContentVisible, setModalContentVisible] = useState(true);
 
   // Call this function when the game is won or lost
   const handleGameEnd = (didWin: boolean) => {
@@ -32,6 +33,16 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitG
   const togglePause = () => {
     setGameOutcome(GameOutcome.Paused);
     setModalIsOpen(true);
+  };
+
+  const onNewCategoryClick = () => {
+    handleRequestClose();
+    onNewCategory();
+  };
+
+  const onQuitGameClick = () => {
+    handleRequestClose();
+    onQuitGame();
   };
 
   // Function to update game state on incorrect guess
@@ -77,6 +88,14 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitG
     }
   };
 
+  const handleRequestClose = () => {
+    setModalContentVisible(false); // First, hide the modal content
+    setTimeout(() => {
+      setModalIsOpen(false); // Then close the modal after the timeout
+      setModalContentVisible(true); // Reset the content visibility for the next opening
+    }, 300); // This should match your CSS transition duration
+  };
+
   const letters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
   const letterButtons = letters.map((letter) => <LetterButton key={letter} letter={letter} onLetterClick={handleLetterClick} disabled={guessedLetters.includes(letter)} />);
   const health = ((maxTries - incorrectTries) / maxTries) * 100;
@@ -99,13 +118,14 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitG
       <div className='keyboard-container'>{letterButtons}</div>
       <Dialog
         isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        onRequestClose={handleRequestClose}
         titleText={gameOutcome}
-        onQuit={onQuitGame}
-        onNewCategory={onNewCategory}
+        onQuit={onQuitGameClick}
+        onNewCategory={onNewCategoryClick}
+        modalContentVisible={modalContentVisible}
         onPlayAgainOrContinue={
           gameOutcome === 'Paused'
-            ? () => setModalIsOpen(false)
+            ? handleRequestClose
             : () => {
                 onPlayAgain();
                 setModalIsOpen(false);

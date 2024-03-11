@@ -11,6 +11,7 @@ interface DialogProps {
   titleText?: GameOutcome;
   onNewCategory: () => void;
   onPlayAgainOrContinue: () => void;
+  modalContentVisible: boolean;
   onQuit: () => void;
 }
 
@@ -35,22 +36,24 @@ const customStyles = {
   },
 };
 
-const Dialog: React.FC<DialogProps> = ({ titleText, isOpen, onRequestClose, onQuit, onNewCategory, onPlayAgainOrContinue }) => {
+const Dialog: React.FC<DialogProps> = ({ titleText, isOpen, onRequestClose, onQuit, onNewCategory, onPlayAgainOrContinue, modalContentVisible }) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles} shouldCloseOnOverlayClick={false} contentLabel='Example Modal'>
-      <BoxContainer titleText={titleText}>
-        <div className='buttons'>
-          <Button theme='blue' onClick={onPlayAgainOrContinue}>
-            {titleText === GameOutcome.Paused ? 'Continue' : 'Play Again!'}
-          </Button>
-          <Button theme='blue' onClick={onNewCategory}>
-            New Category
-          </Button>
-          <Button theme='pink' onClick={onQuit}>
-            Quit Game
-          </Button>
-        </div>
-      </BoxContainer>
+      <div className={`modal-wrapper ${!modalContentVisible ? 'closing' : ''}`}>
+        <BoxContainer titleText={titleText}>
+          <div className='buttons'>
+            <Button theme='blue' onClick={onPlayAgainOrContinue}>
+              {titleText === GameOutcome.Paused ? 'Continue' : 'Play Again!'}
+            </Button>
+            <Button theme='blue' onClick={onNewCategory}>
+              New Category
+            </Button>
+            <Button theme='pink' onClick={onQuit}>
+              Quit Game
+            </Button>
+          </div>
+        </BoxContainer>
+      </div>
     </Modal>
   );
 };
