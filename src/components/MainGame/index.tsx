@@ -4,7 +4,7 @@ import LetterButton from '../common/LetterButton';
 import LetterBox from '../common/LetterBox';
 import GameHeader from '../GameHeader';
 import Dialog from '../Dialog';
-import { DialogState } from '../../types';
+import { GameOutcome } from '../../types';
 
 interface MainGameProps {
   categoryName: string;
@@ -12,24 +12,25 @@ interface MainGameProps {
   onQuitGame: () => void;
   onPlayAgain: () => void;
   onNewCategory: () => void;
+  setGameOutcome: (outcome: GameOutcome) => void;
+  gameOutcome: GameOutcome;
 }
 
-const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitGame, onNewCategory, onPlayAgain }) => {
+const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitGame, onNewCategory, onPlayAgain, setGameOutcome, gameOutcome }) => {
   const maxTries = 8;
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [incorrectTries, setIncorrectTries] = useState<number>(0);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [gameState, setGameState] = useState<DialogState | null>(null);
 
   // Call this function when the game is won or lost
   const handleGameEnd = (didWin: boolean) => {
-    setGameState(didWin ? 'You Win' : 'You Lose');
     setModalIsOpen(true);
+    setGameOutcome(didWin ? GameOutcome.Win : GameOutcome.Lose);
   };
 
   // Call this function when the hamburger menu is clicked
   const togglePause = () => {
-    setGameState('Paused');
+    setGameOutcome(GameOutcome.Paused);
     setModalIsOpen(true);
   };
 
@@ -76,7 +77,6 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitG
     }
   };
 
-  // Generate on-screen keyboard
   const letters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
   const letterButtons = letters.map((letter) => <LetterButton key={letter} letter={letter} onLetterClick={handleLetterClick} disabled={guessedLetters.includes(letter)} />);
   const health = ((maxTries - incorrectTries) / maxTries) * 100;
@@ -100,11 +100,11 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitG
       <Dialog
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        titleText={gameState}
+        titleText={gameOutcome}
         onQuit={onQuitGame}
         onNewCategory={onNewCategory}
         onPlayAgainOrContinue={
-          gameState === 'Paused'
+          gameOutcome === 'Paused'
             ? () => setModalIsOpen(false)
             : () => {
                 onPlayAgain();

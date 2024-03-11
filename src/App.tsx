@@ -6,12 +6,13 @@ import PickCategory from './components/PickACategory';
 import { GameState } from './constants/GameState';
 import MainGame from './components/MainGame';
 import { useCategorySelection } from './hooks/useCategorySelection';
-import { CategoryName } from './types';
+import { CategoryName, GameOutcome } from './types';
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.MainGame);
-  const [categoryName, setCategoryName] = useState<CategoryName>('Countries');
-  const [selectedWord, setSelectedWord] = useState<string>('San Josedw Sharks');
+  const [categoryName, setCategoryName] = useState<CategoryName>('Movies');
+  const [selectedWord, setSelectedWord] = useState<string>('Test Word');
+  const [gameOutcome, setGameOutcome] = useState<GameOutcome>(GameOutcome.None);
   const { selectRandomWord } = useCategorySelection();
 
   useEffect(() => {
@@ -38,8 +39,16 @@ const App: React.FC = () => {
   };
 
   const handlePlayAgain = () => {
-    const [name, word] = selectRandomWord(categoryName);
-    handleCategorySelected(name, word);
+    if (gameOutcome === GameOutcome.Win) {
+      // Select a new word only if the user won the last game
+      const [name, word] = selectRandomWord(categoryName);
+      handleCategorySelected(name, word);
+    } else if (gameOutcome === GameOutcome.Lose) {
+      // Keep the same word if the user lost
+      setGameState(GameState.MainGame);
+    }
+    // Reset game outcome for the new game
+    setGameOutcome(GameOutcome.None);
   };
 
   const handleCategorySelected = (selectedCategory: CategoryName, word: string) => {
@@ -53,7 +62,7 @@ const App: React.FC = () => {
       {gameState === GameState.Start && <StartScreen onStartClick={handleStartClick} onHowToPlayClick={handleHowToPlayClick} />}
       {gameState === GameState.HowToPlay && <HowToPlay goBack={goBackToStart} />}
       {gameState === GameState.PickCategory && <PickCategory onCategorySelected={handleCategorySelected} goBack={goBackToStart} />}
-      {gameState === GameState.MainGame && <MainGame categoryName={categoryName} selectedWord={selectedWord} onQuitGame={goBackToStart} onNewCategory={handleStartClick} onPlayAgain={handlePlayAgain} />}
+      {gameState === GameState.MainGame && <MainGame categoryName={categoryName} selectedWord={selectedWord} onQuitGame={goBackToStart} onNewCategory={handleStartClick} onPlayAgain={handlePlayAgain} setGameOutcome={setGameOutcome} gameOutcome={gameOutcome} />}
     </div>
   );
 };

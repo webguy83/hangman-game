@@ -3,12 +3,12 @@ import BoxContainer from '../common/BoxContainer'; // Adjust the path as necessa
 import Button from '../common/Button';
 import Modal from 'react-modal';
 import './Dialog.scss';
-import { DialogState } from '../../types';
+import { GameOutcome } from '../../types';
 
 interface DialogProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  titleText?: DialogState | null;
+  titleText?: GameOutcome;
   onNewCategory: () => void;
   onPlayAgainOrContinue: () => void;
   onQuit: () => void;
@@ -41,7 +41,7 @@ const Dialog: React.FC<DialogProps> = ({ titleText, isOpen, onRequestClose, onQu
       <BoxContainer titleText={titleText}>
         <div className='buttons'>
           <Button theme='blue' onClick={onPlayAgainOrContinue}>
-            {titleText === 'Paused' ? 'Continue' : 'Play Again!'}
+            {titleText === GameOutcome.Paused ? 'Continue' : 'Play Again!'}
           </Button>
           <Button theme='blue' onClick={onNewCategory}>
             New Category

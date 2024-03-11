@@ -19,6 +19,12 @@
   transition: width 0.3s ease-in-out;
 }
 
+@media (min-width: 400px) {
+  .health-bar-container {
+    max-width: 11.7rem;
+  }
+}
+
 @media (min-width: 550px) {
   .health-bar-container {
     height: 3.1rem;

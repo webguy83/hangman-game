@@ -9,7 +9,7 @@
   padding: 1.2rem 6.4rem; // Converted to rem
   gap: 0.8rem;
   letter-spacing: 0.05em;
-  font-size: 3.2rem;
+  font-size: 2.6rem;
   font-family: 'MouseMemoirs-Regular', sans-serif;
   color: var(--white);
   border: none;
@@ -20,11 +20,11 @@
 
 // Blue theme styles
 .button-blue {
-  background: #2463ff;
+  background: var(--blue);
   box-shadow: inset 0px -0.2rem 0px 0.3rem #140e66, inset 0px 0.1rem 0px 0.6rem #3c74ff;
 
   &:hover {
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), #2463ff;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), var(--blue);
     box-shadow: inset 0px -2px 0px 3px #140e66, inset 0px 1px 0px 6px #3c74ff;
   }
 }
@@ -37,5 +37,11 @@
   &:hover {
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), linear-gradient(180deg, #fe71fe 16.42%, #7199ff 100%);
     box-shadow: inset 0px -2px 0px 3px #140e66, inset 0px 1px 0px 6px #c642fb;
+  }
+}
+
+@media (min-width: 370px) {
+  .button {
+    font-size: 3.2rem;
   }
 }
