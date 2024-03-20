@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import data from '../data/data.json';
 import { Categories } from '../interfaces';
 import { CategoryName } from '../types';
@@ -11,26 +11,30 @@ export const useCategorySelection = () => {
   const categoryData: CategoryData = data;
   const [categories, setCategories] = useState<Categories>(categoryData.categories);
 
-  const selectRandomWord = (categoryName: keyof Categories): [CategoryName, string] => {
-    // Filter out already selected words
-    const availableWords = categories[categoryName].filter((word) => !word.selected);
+  const selectRandomWord = useCallback((categoryName: keyof Categories): [CategoryName, string] => {
+    let availableWords = categories[categoryName].filter(word => !word.selected);
 
-    // If all words have been selected, reset the category and select again
+    // Direct approach to handle if all words are selected
     if (availableWords.length === 0) {
-      const resetWords = categories[categoryName].map((word) => ({ ...word, selected: false }));
-      setCategories((prev) => ({ ...prev, [categoryName]: resetWords }));
-      return selectRandomWord(categoryName);
+      // Reset all words in the category to not selected
+      const resetWords = categories[categoryName].map(word => ({ ...word, selected: false }));
+      setCategories(prev => ({ ...prev, [categoryName]: resetWords }));
+      
+      // Immediately update availableWords with reset words for selection
+      availableWords = resetWords;
     }
 
+    // Now, select a random word
     const randomIndex = Math.floor(Math.random() * availableWords.length);
     const selectedWord = availableWords[randomIndex].name;
 
-    // Mark the word as selected
-    const updatedWords = categories[categoryName].map((word) => (word.name === selectedWord ? { ...word, selected: true } : word));
-    setCategories((prev) => ({ ...prev, [categoryName]: updatedWords }));
+    // Mark the word as selected and update the state
+    const updatedWords = categories[categoryName].map(word => word.name === selectedWord ? { ...word, selected: true } : word);
+    setCategories(prev => ({ ...prev, [categoryName]: updatedWords }));
 
     return [categoryName, selectedWord];
-  };
+  }, [categories]);
 
   return { selectRandomWord, categories };
 };
+

@@ -5,16 +5,12 @@ import HowToPlay from './components/HowToPlay';
 import PickCategory from './components/PickACategory';
 import { GameState } from './constants/GameState';
 import MainGame from './components/MainGame';
-import { useCategorySelection } from './hooks/useCategorySelection';
-import { CategoryName, GameOutcome } from './types';
+import { CategoryName } from './types';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const App: React.FC = () => {
-  const [gameState, setGameState] = useState<GameState>(GameState.MainGame);
+  const [gameState, setGameState] = useState<GameState>(GameState.Start);
   const [categoryName, setCategoryName] = useState<CategoryName>('Movies');
-  const [selectedWord, setSelectedWord] = useState<string>('Interstellar');
-  const [gameOutcome, setGameOutcome] = useState<GameOutcome>(GameOutcome.None);
-  const { selectRandomWord } = useCategorySelection();
 
   useEffect(() => {
     if (gameState === GameState.Start) {
@@ -39,24 +35,20 @@ const App: React.FC = () => {
     setGameState(GameState.Start);
   };
 
-  const handlePlayAgain = () => {
-    if (gameOutcome === GameOutcome.Win) {
-      // Select a new word only if the user won the last game
-      const [name, word] = selectRandomWord(categoryName);
-      handleCategorySelected(name, word);
-    } else if (gameOutcome === GameOutcome.Lose) {
-      // Keep the same word if the user lost
-      setGameState(GameState.MainGame);
-    }
-    // Reset game outcome for the new game
-    setGameOutcome(GameOutcome.None);
-  };
+  // const handlePlayAgain = () => {
+  //   if (gameOutcome === GameOutcome.Win) {
+  //     // Select a new word only if the user won the last game
+  //     const [name, word] = selectRandomWord(categoryName);
+  //     handleCategorySelected(name, word);
+  //   } else if (gameOutcome === GameOutcome.Lose) {
+  //     // Keep the same word if the user lost
+  //     setGameState(GameState.MainGame);
+  //   }
+  //   // Reset game outcome for the new game
+  //   setGameOutcome(GameOutcome.None);
+  // };
 
-  const handleCategorySelected = (selectedCategory: CategoryName, word: string) => {
-    setCategoryName(selectedCategory);
-    setSelectedWord(word);
-    setGameState(GameState.MainGame);
-  };
+  
 
   const renderComponent = () => {
     switch (gameState) {
@@ -65,9 +57,9 @@ const App: React.FC = () => {
       case GameState.HowToPlay:
         return <HowToPlay goBack={goBackToStart} />;
       case GameState.PickCategory:
-        return <PickCategory onCategorySelected={handleCategorySelected} goBack={goBackToStart} />;
+        return <PickCategory goBack={goBackToStart} setCategoryName={setCategoryName} setGameState={setGameState} />;
       case GameState.MainGame:
-        return <MainGame categoryName={categoryName} selectedWord={selectedWord} onQuitGame={goBackToStart} onNewCategory={handleStartClick} onPlayAgain={handlePlayAgain} setGameOutcome={setGameOutcome} gameOutcome={gameOutcome} />;
+        return <MainGame categoryName={categoryName} onQuitGame={goBackToStart} onNewCategory={handleStartClick} />;
       default:
         return null;
     }

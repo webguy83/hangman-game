@@ -1,27 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MainGame.scss';
 import LetterButton from '../common/LetterButton';
 import LetterBox from '../common/LetterBox';
 import GameHeader from '../GameHeader';
 import Dialog from '../Dialog';
-import { GameOutcome } from '../../types';
+import { CategoryName, GameOutcome } from '../../types';
+import { useCategorySelection } from '../../hooks/useCategorySelection';
+import { GameState } from '../../constants/GameState';
 
 interface MainGameProps {
-  categoryName: string;
-  selectedWord: string;
+  categoryName: CategoryName;
   onQuitGame: () => void;
-  onPlayAgain: () => void;
   onNewCategory: () => void;
-  setGameOutcome: (outcome: GameOutcome) => void;
-  gameOutcome: GameOutcome;
 }
 
-const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitGame, onNewCategory, onPlayAgain, setGameOutcome, gameOutcome }) => {
+const MainGame: React.FC<MainGameProps> = ({ categoryName, onQuitGame, onNewCategory }) => {
   const maxTries = 8;
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [incorrectTries, setIncorrectTries] = useState<number>(0);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [modalContentVisible, setModalContentVisible] = useState(true);
+  const [gameOutcome, setGameOutcome] = useState<GameOutcome>(GameOutcome.None);
+  const [selectedWord, setSelectedWord] = useState<string>('');
+  const [isInitialWordSet, setIsInitialWordSet] = useState(false);
+  const { selectRandomWord } = useCategorySelection();
+
+  useEffect(() => {
+    if (!isInitialWordSet) {
+      const [_, word] = selectRandomWord(categoryName);
+      setSelectedWord(word);
+      setIsInitialWordSet(true); // Mark that the initial word is now set
+    }
+  }, [categoryName, isInitialWordSet, selectRandomWord]);
 
   // Call this function when the game is won or lost
   const handleGameEnd = (didWin: boolean) => {
@@ -43,6 +53,22 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitG
   const onQuitGameClick = () => {
     handleRequestClose();
     onQuitGame();
+  };
+
+  const handlePlayAgain = () => {
+    if (gameOutcome === GameOutcome.Win) {
+      const [_, word] = selectRandomWord(categoryName);
+      setSelectedWord(word);
+    }
+    // No need to handle the loss case explicitly if we're keeping the word the same
+    setGameOutcome(GameOutcome.None);
+    resetGameState();
+  };
+
+  const resetGameState = () => {
+    setGuessedLetters([]);
+    setIncorrectTries(0);
+    setModalIsOpen(false)
   };
 
   // Function to update game state on incorrect guess
@@ -124,14 +150,9 @@ const MainGame: React.FC<MainGameProps> = ({ categoryName, selectedWord, onQuitG
         onNewCategory={onNewCategoryClick}
         modalContentVisible={modalContentVisible}
         onPlayAgainOrContinue={
-          gameOutcome === 'Paused'
-            ? handleRequestClose
-            : () => {
-                onPlayAgain();
-                setModalIsOpen(false);
-                setGuessedLetters([]);
-                setIncorrectTries(0);
-              }
+          gameOutcome === 'Paused' 
+            ? () => setModalIsOpen(false)
+            : handlePlayAgain
         }
       />
     </div>

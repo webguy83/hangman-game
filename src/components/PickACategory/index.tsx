@@ -4,18 +4,20 @@ import Header from '../common/Header';
 import CategoryButton from '../common/CategoryButton';
 import { useCategorySelection } from '../../hooks/useCategorySelection';
 import { CategoryName } from '../../types';
+import { GameState } from '../../constants/GameState';
 
 interface PickACategoryProps {
   goBack: () => void;
-  onCategorySelected: (categoryName: CategoryName, selectedWord: string) => void;
+  setCategoryName: (categoryName: CategoryName) => void;
+  setGameState: (gameState: GameState) => void
 }
 
-const PickACategory: React.FC<PickACategoryProps> = ({ goBack, onCategorySelected }) => {
-  const { selectRandomWord, categories } = useCategorySelection();
+const PickACategory: React.FC<PickACategoryProps> = ({ goBack, setCategoryName, setGameState }) => {
+  const { categories } = useCategorySelection();
 
   const handleCategorySelected = (categoryName: CategoryName) => {
-    const [name, word] = selectRandomWord(categoryName);
-    onCategorySelected(name, word);
+    setCategoryName(categoryName);
+    setGameState(GameState.MainGame);
   };
 
   return (
