@@ -6,11 +6,18 @@ import PickCategory from './components/PickACategory';
 import { GameState } from './constants/GameState';
 import MainGame from './components/MainGame';
 import { CategoryName } from './types';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { useTransition, animated } from 'react-spring';
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.Start);
   const [categoryName, setCategoryName] = useState<CategoryName>('Movies');
+
+  const transitions = useTransition(gameState, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: { duration: 300 }, // Customize the transition duration
+  });
 
   useEffect(() => {
     if (gameState === GameState.Start) {
@@ -35,45 +42,15 @@ const App: React.FC = () => {
     setGameState(GameState.Start);
   };
 
-  // const handlePlayAgain = () => {
-  //   if (gameOutcome === GameOutcome.Win) {
-  //     // Select a new word only if the user won the last game
-  //     const [name, word] = selectRandomWord(categoryName);
-  //     handleCategorySelected(name, word);
-  //   } else if (gameOutcome === GameOutcome.Lose) {
-  //     // Keep the same word if the user lost
-  //     setGameState(GameState.MainGame);
-  //   }
-  //   // Reset game outcome for the new game
-  //   setGameOutcome(GameOutcome.None);
-  // };
-
-  
-
-  const renderComponent = () => {
-    switch (gameState) {
-      case GameState.Start:
-        return <StartScreen onStartClick={handleStartClick} onHowToPlayClick={handleHowToPlayClick} />;
-      case GameState.HowToPlay:
-        return <HowToPlay goBack={goBackToStart} />;
-      case GameState.PickCategory:
-        return <PickCategory goBack={goBackToStart} setCategoryName={setCategoryName} setGameState={setGameState} />;
-      case GameState.MainGame:
-        return <MainGame categoryName={categoryName} onQuitGame={goBackToStart} onNewCategory={handleStartClick} />;
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className='app'>
-      <TransitionGroup component={null}>
-        <CSSTransition key={gameState} timeout={300} classNames='fade'>
-          {renderComponent()}
-        </CSSTransition>
-      </TransitionGroup>
-    </div>
-  );
+  return transitions((styles, item) => (
+    <animated.div style={styles} className="app">
+      {item === GameState.Start && <StartScreen onStartClick={handleStartClick} onHowToPlayClick={handleHowToPlayClick} />}
+      {item === GameState.HowToPlay && <HowToPlay goBack={goBackToStart} />}
+      {item === GameState.PickCategory && <PickCategory goBack={goBackToStart} setCategoryName={setCategoryName} setGameState={setGameState} />}
+      {item === GameState.MainGame && <MainGame categoryName={categoryName} onQuitGame={goBackToStart} onNewCategory={handleStartClick} />}
+      {/* Render other components based on gameState */}
+    </animated.div>
+  ));
 };
 
 export default App;
